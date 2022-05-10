@@ -7,7 +7,7 @@
 
 <!-- Modal_เพิ่มประเภทสินค้า -->
 <div class="modal fade" id="addproduct_types" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">เพิ่มประเภทสินค้า</h5>
@@ -24,8 +24,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="type_details">รายละเอียด</label>
-                            <!-- <textarea class="form-control" id="type_details" rows="3" name="type_details"></textarea> -->
-                            <textarea name="type_details" id="type_details" cols="30" rows="10"></textarea>
+                            <textarea class="form-control" id="type_details" rows="3" name="type_details"></textarea>
                         </div>
                     </div>
 

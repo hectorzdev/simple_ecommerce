@@ -148,6 +148,28 @@ switch ($action) {
 
         break;
 
+    case 'delete_type':
+        try {
+            $type_id = $_POST['id'];
+            $sql = "SELECT * FROM product_types WHERE type_id = '$type_id'";
+            $query = mysqli_query($conn, $sql);
+
+            $del = "DELETE FROM `product_types` WHERE type_id = '$type_id'";
+            $qdelete = $conn->query($del);
+
+            if (!$qdelete) {
+                throw new Exception("ขออภัย, ไม่สามารถลบประเภทสินค้าได้");
+            }
+
+            $data['success'] = true;
+        } catch (Exception $th) {
+            $data['success'] = false;
+            $data['msg'] = $th->getMessage();
+        }
+        echo json_encode($data);
+
+        break;
+
     case 'delete_image':
         try {
             $id = $_POST['id'];
@@ -207,6 +229,31 @@ switch ($action) {
             } else {
                 $sql = "UPDATE `products` SET `product_name`='$product_name',`product_price`='$product_price',`product_stock`='$product_stock',`product_details` = '$product_details' WHERE id = '$id'";
             }
+            $query = mysqli_query($conn, $sql);
+
+            if (!$query) {
+                throw new Exception("อัพเดทข้อมูลไม่สำเร็จ");
+            }
+
+
+            $data['success'] = true;
+        } catch (Exception $th) {
+            $data['success'] = false;
+            $data['msg'] = $th->getMessage();
+        }
+        echo json_encode($data);
+
+        break;
+
+    case 'update_type':
+        try {
+            $type_id = $_POST['type_id'];
+            $type_name =  $_POST['type_name'];
+            $type_details =  $_POST['type_details'];
+
+            $sql = "UPDATE `product_types` SET `type_name`='$type_name',`type_details`='$type_details'
+                    WHERE type_id = '$type_id'";
+
             $query = mysqli_query($conn, $sql);
 
             if (!$query) {
