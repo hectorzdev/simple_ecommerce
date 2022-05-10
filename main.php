@@ -212,6 +212,7 @@ switch ($action) {
             $product_price =  $_POST['product_price'];
             $product_stock =  $_POST['product_stock'];
             $product_details = $_POST['product_details'];
+            $type_id = $_POST['type_id'];
 
             if ($_FILES['product_image']['size'] > 0) {
 
@@ -224,10 +225,10 @@ switch ($action) {
                 $newfilename = round(microtime(true)) . '_' . time() . '.' . end($temp);
                 $upload = move_uploaded_file($_FILES['product_image']['tmp_name'], "uploads/" . $newfilename);
 
-                $sql = "UPDATE `products` SET `product_name`='$product_name',`product_price`='$product_price',`product_stock`='$product_stock',`product_image` = '$newfilename',`product_details` = '$product_details'
+                $sql = "UPDATE `products` SET `type_id`='$type_id', `product_name`='$product_name',`product_price`='$product_price',`product_stock`='$product_stock',`product_image` = '$newfilename',`product_details` = '$product_details'
                     WHERE id = '$id'";
             } else {
-                $sql = "UPDATE `products` SET `product_name`='$product_name',`product_price`='$product_price',`product_stock`='$product_stock',`product_details` = '$product_details' WHERE id = '$id'";
+                $sql = "UPDATE `products` SET `type_id`='$type_id', `product_name`='$product_name',`product_price`='$product_price',`product_stock`='$product_stock',`product_details` = '$product_details' WHERE id = '$id'";
             }
             $query = mysqli_query($conn, $sql);
 

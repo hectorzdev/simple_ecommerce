@@ -1,11 +1,10 @@
 <?php include '_header.php';
 
 $id = $_GET['product_id'];
-$sql = "SELECT  * FROM `products` WHERE id = $id";
-$query = $conn->query($sql);
-$result = mysqli_fetch_assoc($query);
+$sql = "SELECT * FROM products INNER JOIN product_types ON products.type_id = product_types.type_id WHERE id = '$id' ";
+$query = mysqli_query($conn, $sql);
+$result = mysqli_fetch_assoc($query); ?>
 
-?>
 <div class="container">
     <div class="card mt-4">
         <div class="card-header form-inline">
@@ -15,6 +14,18 @@ $result = mysqli_fetch_assoc($query);
             <form id="updateProduct">
                 <div class="row">
                     <input type="hidden" name="product_id" value="<?= $result['id'] ?>">
+                    <div class="form-group col-md-12">
+                        <label for="type_id">ประเภทสินค้า</label>
+                        <select name="type_id" id="type_id" class="form-control" required>
+                            <?php
+                            $sql = "SELECT * FROM product_types";
+                            $query = mysqli_query($conn, $sql);
+                            while ($row = mysqli_fetch_assoc($query)) {
+                            ?>
+                                <option <?= $result['type_id'] == $row['type_id'] ? 'selected' : '' ?> value="<?= $row['type_id'] ?>"><?php echo $row['type_name'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
                     <div class="form-group col-md-6">
                         <label for="product_name">ชื่อสินค้า</label>
                         <input type="text" name="product_name" id="product_name" value="<?= $result['product_name'] ?>" class="form-control" required>
@@ -55,7 +66,6 @@ $result = mysqli_fetch_assoc($query);
                     <div class="col-2" id="image_<?= $image['id'] ?>">
                         <img src="../uploads/<?= $image['product_image'] ?>" width="100%" class="mb-3" alt="">
                         <button type="button" onclick="deleteImage(<?= $image['id'] ?>)" class="btn btn-danger w-100 mt-1">ลบรูป</button>
-                        <!-- <a href="../main.php?action=delete_image&image=<?= $image['product_image'] ?>&pid=<?= $result['id'] ?>">ลบรูป</a> -->
                     </div>
                 <?php } ?>
             </div>
